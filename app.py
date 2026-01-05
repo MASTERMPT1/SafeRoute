@@ -138,15 +138,16 @@ elif menu == "⭐ Avis & Communauté":
     if st.button("Publier l'avis"):
         st.success("Merci ! Ton avis renforce la confiance de la communauté.")
 
-# --- 5. ÉQUIPE ---
-elif menu == "Qui sommes nous?":
+# --- 5. L'ÉQUIPE PROJET (OBS) ---
+elif menu == "👥 L'Équipe Projet":
     st.markdown("<p class='main-title'>Organigramme (OBS)</p>", unsafe_allow_html=True)
+    st.markdown("### 👑 Direction")
     c1, c2 = st.columns(2)
     with c1:
-        st.markdown("<div class='safe-card'><b> Lisa Marie</b><br>Chef de projet</div>", unsafe_allow_html=True)
-        st.markdown("<div class='safe-card'><b> Zélie</b><br>Chef de projet adjoint</div>", unsafe_allow_html=True)
-        st.markdown("<div class='safe-card'><b> Kamélia</b><br>Responsable planification</div>", unsafe_allow_html=True)
+        st.markdown("<div class='safe-card'><b>Lisa Marie</b><br>Chef de projet</div>", unsafe_allow_html=True)
+        st.markdown("<div class='safe-card'><b>Kamélia</b><br>Responsable planification</div>", unsafe_allow_html=True)
+        st.markdown("<div class='safe-card'><b>Hala</b><br>Responsable financier</div>", unsafe_allow_html=True)
     with c2:
-        st.markdown("<div class='safe-card'><b> Hala</b><br>Responsable financier</div>", unsafe_allow_html=True)
-        st.markdown("<div class='safe-card'><b> Tingyu</b><br>Responsable RH</div>", unsafe_allow_html=True)
-        st.markdown("<div class='safe-card'><b> Nematullah Hussaini</b><br>Responsable qualité</div>", unsafe_allow_html=True)
+        st.markdown("<div class='safe-card'><b>Zélie</b><br>Chef de projet adjoint</div>", unsafe_allow_html=True)
+        st.markdown("<div class='safe-card'><b>Tingyu</b><br>Responsable RH</div>", unsafe_allow_html=True)
+        st.markdown("<div class='safe-card'><b>Nematullah Hussaini</b><br>Responsable Qualité</div>", unsafe_allow_html=True)
