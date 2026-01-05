@@ -145,7 +145,7 @@ elif menu == "⭐ Avis & Communauté":
     st.subheader("Laisser une note sur ton dernier trajet")
     st.select_slider("Ta note", options=["⭐", "⭐⭐", "⭐⭐⭐", "⭐⭐⭐⭐", "⭐⭐⭐⭐⭐"])
     st.text_area("Ton avis")
-    if st.button("Publier l'avis"):
+    elif st.button("Publier l'avis"):
     st.success("Merci ! Ton avis renforce la confiance de la communauté.") 
         
 # --- 5. ÉQUIPE ---
