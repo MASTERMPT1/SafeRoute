@@ -140,7 +140,7 @@ elif menu == "⭐ Avis & Communauté":
 
 # --- 5. L'ÉQUIPE PROJET (OBS) ---
 elif menu == "👥 L'Équipe Projet":
-    st.markdown("<p class='main-title'>Organigramme (OBS)</p>", unsafe_allow_html=True)
+    st.markdown("<p class='main-title'>Qui sommes nous?</p>", unsafe_allow_html=True)
     st.markdown("### 👑 Direction")
     c1, c2 = st.columns(2)
     with c1:
