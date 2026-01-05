@@ -69,11 +69,53 @@ elif menu == "🤝 Co-Walking & Matching":
             verif = "<span class='badge-verified'>VÉRIFIÉ</span>" if u['verified'] else ""
             st.markdown(f"<div class='safe-card'><b>👤 {u['name']} {verif}</b> ({u['role']})<br>📍 {u['txt']}</div>", unsafe_allow_html=True)
 
-# --- 3. SOS ---
+
+# --- 3. SOS & SÉCURITÉ (FSP1 - SÉCURITÉ RENFORCÉE) ---
 elif menu == "🚨 SOS & Sécurité":
-    st.markdown("<p class='main-title'>Assistance SOS</p>", unsafe_allow_html=True)
-    if st.button("🔴 ACTIVER LE SIGNAL SOS"):
-        st.error("ALERTE ENVOYÉE !")
+    st.markdown("<p class='main-title'>Assistance & Urgence</p>", unsafe_allow_html=True)
+    
+    st.warning("⚠️ Ces fonctionnalités sont à utiliser en cas de danger réel ou de sentiment d'insécurité imminent.")
+    
+    # Ligne 1 : Boutons d'appel immédiat
+    col_pol, col_pomp = st.columns(2)
+    with col_pol:
+        st.markdown("### 👮 Police / Secours")
+        if st.button("📞 Appeler le 17 (ou 112)"):
+            st.info("Appel d'urgence en cours... (Simulation)")
+            
+    with col_pomp:
+        st.markdown("### 🚑 SAMU / Pompiers")
+        if st.button("📞 Appeler le 15 (ou 18)"):
+            st.info("Appel secours en cours... (Simulation)")
+
+    st.write("---")
+
+    # Ligne 2 : Alertes communautaires et proches
+    col_sos, col_contact = st.columns(2)
+    with col_sos:
+        st.markdown("### 🚨 Alerte SafeRoute")
+        if st.button("🔴 SOS : ALERTE GÉNÉRALE"):
+            st.error("🚨 SOS ACTIVÉ ! Votre position GPS est partagée avec les SafeRouters à moins de 500m.")
+            st.toast("Signal envoyé à la communauté...")
+
+    with col_contact:
+        st.markdown("### 📱 Mes Proches")
+        if st.button("💬 PRÉVENIR MES CONTACTS"):
+            st.success("✅ SMS envoyé : 'Je ne me sens pas en sécurité, suis mon trajet sur SafeRoute'.")
+
+    st.write("---")
+
+    # Options de prévention (Mode Discret & Arrivée)
+    st.subheader("⚙️ Options de protection")
+    col_opt1, col_opt2 = st.columns(2)
+    with col_opt1:
+        if st.toggle("🔕 Mode Discret (Écran noir)"):
+            st.info("L'application reste active mais l'écran est assombri pour plus de discrétion.")
+            
+    with col_opt2:
+        if st.button("🏠 JE SUIS BIEN ARRIVÉ.E"):
+            st.balloons()
+            st.success("Trajet terminé! Vos proches ont été rassurés grâce à une notification.")
 
 # --- 4. AVIS & NOTES (NOUVEAU) ---
 elif menu == "⭐ Avis & Communauté":
@@ -82,7 +124,7 @@ elif menu == "⭐ Avis & Communauté":
     
     reviews = [
         {"user": "Alice", "note": "⭐⭐⭐⭐⭐", "comm": "Grâce à SafeRoute, je ne stresse plus pour rentrer après la BU le soir !"},
-        {"user": "Mark", "note": "⭐⭐⭐⭐", "comm": "Very helpful for a tourist who doesn't know the safe areas of Lille."},
+        {"user": "Adam", "note": "⭐⭐⭐⭐", "comm": "Very helpful for a tourist who doesn't know the safe areas of Lille."},
         {"user": "Yasmine", "note": "⭐⭐⭐⭐⭐", "comm": "Le système de matching est top, j'ai rencontré des gens super sympas."},
         {"user": "Thomas", "note": "⭐⭐⭐⭐⭐", "comm": "Rassurant de voir les zones éclairées sur la carte."}
     ]
@@ -97,14 +139,14 @@ elif menu == "⭐ Avis & Communauté":
         st.success("Merci ! Ton avis renforce la confiance de la communauté.")
 
 # --- 5. ÉQUIPE ---
-elif menu == "👥 L'Équipe Projet":
+elif menu == "Qui sommes nous?":
     st.markdown("<p class='main-title'>Organigramme (OBS)</p>", unsafe_allow_html=True)
     c1, c2 = st.columns(2)
     with c1:
-        st.markdown("<div class='safe-card'><b>👑 Lisa Marie</b><br>Chef de projet</div>", unsafe_allow_html=True)
-        st.markdown("<div class='safe-card'><b>🥈 Zélie</b><br>Chef de projet adjoint</div>", unsafe_allow_html=True)
-        st.markdown("<div class='safe-card'><b>📅 Kamélia</b><br>Responsable planification</div>", unsafe_allow_html=True)
+        st.markdown("<div class='safe-card'><b> Lisa Marie</b><br>Chef de projet</div>", unsafe_allow_html=True)
+        st.markdown("<div class='safe-card'><b> Zélie</b><br>Chef de projet adjoint</div>", unsafe_allow_html=True)
+        st.markdown("<div class='safe-card'><b> Kamélia</b><br>Responsable planification</div>", unsafe_allow_html=True)
     with c2:
-        st.markdown("<div class='safe-card'><b>💰 Hala</b><br>Responsable financier</div>", unsafe_allow_html=True)
-        st.markdown("<div class='safe-card'><b>🤝 Tingyu</b><br>Responsable RH</div>", unsafe_allow_html=True)
-        st.markdown("<div class='safe-card'><b>🛠️ Nematullah Hussaini</b><br>Responsable qualité</div>", unsafe_allow_html=True)
+        st.markdown("<div class='safe-card'><b> Hala</b><br>Responsable financier</div>", unsafe_allow_html=True)
+        st.markdown("<div class='safe-card'><b> Tingyu</b><br>Responsable RH</div>", unsafe_allow_html=True)
+        st.markdown("<div class='safe-card'><b> Nematullah Hussaini</b><br>Responsable qualité</div>", unsafe_allow_html=True)
