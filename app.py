@@ -89,7 +89,9 @@ elif menu == "📂 Infos Projet":
         st.write("**Chef de Projet :** Lisa Marie")
         st.write("**Adjoint :** Zélie")
         st.write("**Planification :** Kamélia")
+        st.write("**Responsable Financier :** Hala")
         st.write("**RH :** Tingyu")
         st.write("**Qualité :** Nematullah")
     with tab2:
-        st.write("**Finalité :** Améliorer l'image de la MEL et renforcer le lien social.")
+        st.write("**Finalité :** Améliorer l'image de la MEL et renforcer le lien social. Protéger et accompagner les utilisateurs tout le long de leur trajet.")
+
