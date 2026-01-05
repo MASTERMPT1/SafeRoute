@@ -128,24 +128,35 @@ elif menu == "🚨 SOS & Sécurité":
     if st.button("🏠 JE SUIS BIEN ARRIVÉ.E"):
         st.balloons()
 
-# --- 4. AVIS ---
+ # --- 4. AVIS & NOTES (NOUVEAU) ---
+
 elif menu == "⭐ Avis & Communauté":
     st.markdown("<p class='main-title'>Avis des SafeRouters</p>", unsafe_allow_html=True)
     st.subheader("Note moyenne : ⭐ 4.8/5")
-    reviews = [{"u": "Alice", "n": "⭐⭐⭐⭐⭐", "c": "Le Safe Haven du Vieux-Lille m'a trop rassurée !"},
-               {"u": "Mark", "n": "⭐⭐⭐⭐", "c": "Great real-time bus data."}]
+    reviews = [
+        {"user": "Alice", "note": "⭐⭐⭐⭐⭐", "comm": "Grâce à SafeRoute, je ne stresse plus pour rentrer après la BU le soir !"},
+        {"user": "Adam", "note": "⭐⭐⭐⭐", "comm": "Very helpful for a tourist who doesn't know the safe areas of Lille."},
+        {"user": "Yasmine", "note": "⭐⭐⭐⭐⭐", "comm": "Le système de matching est top, j'ai rencontré des gens super sympas."},
+        {"user": "Thomas", "note": "⭐⭐⭐⭐⭐", "comm": "Rassurant de voir les zones éclairées sur la carte."}
+    ]
     for r in reviews:
-        st.markdown(f"<div class='review-card'><b>{r['u']}</b> {r['n']}<br>'{r['c']}'</div>", unsafe_allow_html=True)
-
+        st.markdown(f"<div class='review-card'><b>{r['user']}</b> {r['note']}<br>'{r['comm']}'</div>", unsafe_allow_html=True)
+    st.write("---")
+    st.subheader("Laisser une note sur ton dernier trajet")
+    st.select_slider("Ta note", options=["⭐", "⭐⭐", "⭐⭐⭐", "⭐⭐⭐⭐", "⭐⭐⭐⭐⭐"])
+    st.text_area("Ton avis")
+    if st.button("Publier l'avis"):
+    st.success("Merci ! Ton avis renforce la confiance de la communauté.") 
+        
 # --- 5. ÉQUIPE ---
 elif menu == "👥 L'Équipe Projet":
     st.markdown("<p class='main-title'>L'Équipe SafeRoute</p>", unsafe_allow_html=True)
     c1, c2 = st.columns(2)
     with c1:
-        st.markdown("<div class='safe-card'>👑 <b>Lisa Marie</b><br>Chef de projet</div>", unsafe_allow_html=True)
-        st.markdown("<div class='safe-card'>📅 <b>Kamélia</b><br>Responsable planification</div>", unsafe_allow_html=True)
-        st.markdown("<div class='safe-card'>💰 <b>Hala</b><br>Responsable financier</div>", unsafe_allow_html=True)
+        st.markdown("<div class='safe-card'> <b>Lisa Marie</b><br>Chef de projet</div>", unsafe_allow_html=True)
+        st.markdown("<div class='safe-card'> <b>Kamélia</b><br>Responsable planification</div>", unsafe_allow_html=True)
+        st.markdown("<div class='safe-card'> <b>Hala</b><br>Responsable financier</div>", unsafe_allow_html=True)
     with c2:
-        st.markdown("<div class='safe-card'>🥈 <b>Zélie</b><br>Chef de projet adjoint</div>", unsafe_allow_html=True)
-        st.markdown("<div class='safe-card'>🤝 <b>Tingyu</b><br>Responsable RH</div>", unsafe_allow_html=True)
-        st.markdown("<div class='safe-card'>🛠️ <b>Nematullah Hussaini</b><br>Responsable Qualité</div>", unsafe_allow_html=True)
+        st.markdown("<div class='safe-card'> <b>Zélie</b><br>Chef de projet adjoint</div>", unsafe_allow_html=True)
+        st.markdown("<div class='safe-card'> <b>Tingyu</b><br>Responsable RH</div>", unsafe_allow_html=True)
+        st.markdown("<div class='safe-card'> <b>Nematullah Hussaini</b><br>Responsable Qualité</div>", unsafe_allow_html=True)
