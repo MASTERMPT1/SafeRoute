@@ -4,94 +4,113 @@ import folium
 from streamlit_folium import st_folium
 from datetime import datetime
 
-# --- CONFIGURATION & DESIGN (UX/UI) ---
-st.set_page_config(page_title="SafeRoute | Sécurité MEL", page_icon="🛡️", layout="wide")
+# --- CONFIGURATION UX/UI (Minimaliste Beige & Indigo) ---
+st.set_page_config(page_title="SafeRoute | Sécurité & Solidarité", page_icon="🛡️", layout="wide")
 
 st.markdown("""
     <style>
-    .stApp { background-color: #1a1a2e; color: #f0ead6; }
-    .main-title { font-size: 45px; font-weight: bold; color: #ffd700; text-align: center; }
-    .stButton>button { border-radius: 20px; background: #ffd700; color: #1a1a2e; font-weight: bold; width: 100%; }
-    .safe-card { background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 15px; border-left: 5px solid #ffd700; margin-bottom: 10px; }
+    .stApp { background-color: #1a1a2e; color: #f5f5dc; }
+    .main-title { font-size: 40px; font-weight: bold; color: #ffd700; text-align: center; margin-bottom: 0px; }
+    .stButton>button { border-radius: 20px; background: #ffd700; color: #1a1a2e; font-weight: bold; border: none; }
+    .safe-card { background: rgba(255, 255, 255, 0.07); padding: 15px; border-radius: 15px; border-left: 5px solid #ffd700; margin-bottom: 15px; }
+    .badge-verified { background-color: #4cd137; color: white; padding: 2px 8px; border-radius: 10px; font-size: 10px; }
     </style>
     """, unsafe_allow_html=True)
 
-# --- SIDEBAR (OBS & ÉQUIPE) ---
+# --- SIDEBAR (Organisation OBS & RGPD) ---
 with st.sidebar:
-    st.image("https://img.icons8.com/clouds/200/shield.png", width=100)
-    st.markdown("## 🛡️ SAFEROUTE")
-    st.caption("Projet M1 Management Touristique")
+    st.markdown("<h1 style='color: #ffd700;'>🛡️ SafeRoute</h1>", unsafe_allow_html=True)
+    st.caption("Projet Management de Projet Touristique")
     st.write("---")
-    menu = st.radio("Navigation", ["🗺️ Carte Safe", "🤝 Matching Trajet", "🚨 SOS & Alerte", "📂 Infos Projet"])
+    menu = st.radio("MENU PRINCIPAL", ["📍 Carte & Refuges", "🤝 Co-Walking & Matching", "🚨 SOS & Sécurité", "📈 Dashboard Équipe"])
     st.write("---")
-    st.markdown("**Responsable Planification :** Kamélia")
+    st.markdown("🔐 **Conformité RGPD** : Données chiffrées (Hébergement UE).")
 
-# --- CONFORMITÉ RGPD (FSC1) ---
-if 'gdpr' not in st.session_state:
-    with st.warning("🔐 **Conformité RGPD** : SafeRoute protège vos données. Acceptez-vous le suivi GPS pour votre sécurité ?"):
-        if st.button("Accepter et continuer"):
-            st.session_state['gdpr'] = True
-            st.rerun()
-    st.stop()
+# --- 1. CARTE INTERACTIVE (FSP1 & FSP2) ---
+if menu == "📍 Carte & Refuges":
+    st.markdown("<p class='main-title'>Itinéraires Sécurisés</p>", unsafe_allow_html=True)
+    
+    col_map, col_info = st.columns([3, 1])
+    
+    with col_map:
+        m = folium.Map(location=[50.6292, 3.0573], zoom_start=13, tiles="CartoDB dark_matter")
+        # Safe Haven (Commerce partenaire)
+        folium.Marker([50.633, 3.060], popup="<b>Point de RDV : Grand Place</b>", icon=folium.Icon(color='green', icon='shield', prefix='fa')).add_to(m)
+        # Zone sombre signalée
+        folium.Circle([50.6348, 2.9646], radius=400, color="red", fill=True, popup="Zone signalée : Éclairage HS").add_to(m)
+        st_folium(m, width="100%", height=500)
+    
+    with col_info:
+        st.subheader("Légende")
+        st.write("🟢 **Safe Haven** : Commerce refuge")
+        st.write("🔴 **Vigilance** : Zone mal éclairée")
+        st.write("---")
+        st.markdown("### Noter une rue")
+        rue = st.text_input("Nom de la rue")
+        light = st.select_slider("Niveau d'éclairage", options=["Sombre", "Moyen", "Parfait"])
+        if st.button("Valider le signalement"):
+            st.toast("Merci ! La carte a été mise à jour pour la communauté.")
 
-# --- 1. CARTE INTERACTIVE (GÉOLOCALISATION) ---
-if menu == "🗺️ Carte Safe":
-    st.markdown("<p class='main-title'>Zones Éclairées & Refuges</p>", unsafe_allow_html=True)
+# --- 2. CO-WALKING & MATCHING (Système Intelligent FSP3) ---
+elif menu == "🤝 Co-Walking & Matching":
+    st.markdown("<p class='main-title'>Trouver un Partenaire</p>", unsafe_allow_html=True)
     
-    # Carte centrée sur la MEL
-    m = folium.Map(location=[50.6292, 3.0573], zoom_start=13, tiles="CartoDB dark_matter")
+    type_user = st.segmented_control("Vous êtes :", ["Étudiant", "Touriste", "Habitant"])
     
-    # Points basés sur tes "FSP" (Fonctions de Service)
-    folium.Marker([50.633, 3.060], popup="Grand Place - Zone Vidéoprotégée", icon=folium.Icon(color='green', icon='eye', prefix='fa')).add_to(m)
-    folium.Marker([50.627, 3.058], popup="Safe Haven : Bar Solférino (Ouvert)", icon=folium.Icon(color='blue', icon='shop', prefix='fa')).add_to(m)
+    tab_list, tab_create = st.tabs(["Trajets disponibles", "Proposer un trajet"])
     
-    st_folium(m, width="100%", height=500)
-    st.info("💡 Les zones en surbrillance indiquent un éclairage public renforcé.")
-
-# --- 2. MATCHING INTELLIGENT (ALGORITHME DE CORRESPONDANCE) ---
-elif menu == "🤝 Matching Trajet":
-    st.header("Rompre l'isolement (FSP2)")
-    
-    col1, col2 = st.columns([1, 1])
-    with col1:
-        st.subheader("Algorithme de Matching")
-        dep = st.text_input("Point de départ")
-        arr = st.text_input("Destination")
-        if st.button("Chercher des partenaires"):
-            st.success("Recherche en cours selon l'algorithme de proximité...")
-            st.balloons()
-
-    with col2:
-        st.subheader("Groupes disponibles")
+    with tab_list:
         st.markdown("""
         <div class='safe-card'>
-            <b>👤 Alice (Persona)</b><br>Lille Flandres ➔ Vauban<br>Départ : 23:45
+            <b>👤 Alice <span class='badge-verified'>VÉRIFIÉ</span></b> (Étudiante)<br>
+            📍 <b>Trajet :</b> Vieux-Lille ➔ Vauban<br>
+            ⏰ <b>Départ :</b> 23:30 | <b>Safe Score :</b> ⭐ 4.9/5
         </div>
         <div class='safe-card'>
-            <b>👥 Groupe Étudiants</b><br>Solférino ➔ Cité Scientifique<br>Départ : 00:15
+            <b>👤 Mark <span class='badge-verified'>VÉRIFIÉ</span></b> (Touriste)<br>
+            📍 <b>Trajet :</b> Citadelle ➔ Gare Lille Flandres<br>
+            ⏰ <b>Départ :</b> 00:05 | <b>Besoin :</b> Guide local
         </div>
         """, unsafe_allow_html=True)
+        if st.button("Rejoindre un groupe"):
+            st.success("Demande envoyée ! Attendez la confirmation sur votre mobile.")
 
-# --- 3. SOS & ALERTE (FSP1) ---
-elif menu == "🚨 SOS & Alerte":
-    st.header("Système d'Alerte Instantané")
-    st.markdown("En cas de danger, ce bouton prévient vos contacts d'urgence et les SafeRoutes à proximité.")
+    with tab_create:
+        with st.form("create_walk"):
+            st.text_input("Point de départ")
+            st.text_input("Destination")
+            st.time_input("Heure de départ")
+            if st.form_submit_button("Publier l'annonce"):
+                st.balloons()
+
+# --- 3. SOS & SÉCURITÉ (Bouton Alerte FSP1) ---
+elif menu == "🚨 SOS & Sécurité":
+    st.markdown("<p class='main-title'>Assistance Immédiate</p>", unsafe_allow_html=True)
     
-    if st.button("🔴 DÉCLENCHER LE SOS"):
-        st.error("🚨 ALERTE ENVOYÉE ! Votre position est partagée avec les autorités et vos proches.")
-        st.toast("Localisation envoyée...")
+    st.error("Utilisez ces fonctions uniquement en cas de besoin réel.")
+    
+    col_sos, col_arrived = st.columns(2)
+    with col_sos:
+        if st.button("🔴 DÉCLENCHER SOS"):
+            st.markdown("<h2 style='color:red; text-align:center;'>ALERTE NIVEAU 1 ENVOYÉE</h2>", unsafe_allow_html=True)
+    
+    with col_arrived:
+        if st.button("🏠 JE SUIS BIEN ARRIVÉ"):
+            st.success("Super ! Votre groupe de trajet a été informé.")
 
-# --- 4. INFOS PROJET (WBS / PBS) ---
-elif menu == "📂 Infos Projet":
-    st.title("Structure du Projet")
-    tab1, tab2 = st.tabs(["L'Équipe (OBS)", "Objectifs"])
-    with tab1:
-        st.write("**Chef de Projet :** Lisa Marie")
-        st.write("**Adjoint :** Zélie")
-        st.write("**Planification :** Kamélia")
-        st.write("**Responsable Financier :** Hala")
-        st.write("**RH :** Tingyu")
-        st.write("**Qualité :** Nematullah")
-    with tab2:
-        st.write("**Finalité :** Améliorer l'image de la MEL et renforcer le lien social. Protéger et accompagner les utilisateurs tout le long de leur trajet.")
-
+# --- 4. DASHBOARD ÉQUIPE (OBS & WBS) ---
+elif menu == "📈 Dashboard Équipe":
+    st.header("Gestion du Projet SafeRoute")
+    st.markdown(f"**Chef de Projet :** Lisa Marie | **Planification :** Kamélia")
+    
+    # Simulation des indicateurs clés (KPIs)
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Utilisateurs Actifs", "124", "+12%")
+    col2.metric("Zones Sécurisées", "45", "MEL")
+    col3.metric("Safe Score Moyen", "4.8/5", "⭐⭐⭐⭐")
+    
+    st.write("---")
+    st.subheader("Objectifs Opérationnels")
+    st.checkbox("Concevoir une application simple et rassurante", value=True)
+    st.checkbox("Informer sur les zones sécurisées", value=True)
+    st.checkbox("Mettre en place le système de groupes", value=True)
